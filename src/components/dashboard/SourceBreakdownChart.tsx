@@ -26,20 +26,25 @@ export const SourceBreakdownChart: React.FC<SourceBreakdownChartProps> = ({ metr
   }
 
   return (
-    <div className="bg-white p-5 rounded-xl border border-slate-200/90 shadow-xs flex flex-col justify-between">
-      <div className="flex items-center justify-between mb-2">
-        <h3 className="text-sm font-bold text-slate-800">Source Breakdown</h3>
-        <span className="text-xs text-slate-400">RTA Portfolio Share</span>
+    <div className="bg-white p-4 sm:p-5 rounded-xl border border-slate-200/90 shadow-xs flex flex-col justify-between h-full">
+      <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+        <div>
+          <h3 className="text-sm font-bold text-slate-800">Source Breakdown</h3>
+          <p className="text-[11px] text-slate-400">RTA Portfolio Share</p>
+        </div>
+        <span className="text-[11px] font-mono font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md">
+          {metrics.totalRecords} records
+        </span>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 items-center gap-4 py-2">
-        <div className="h-44 w-full">
+      <div className="py-2 flex flex-col items-center">
+        <div className="h-36 sm:h-40 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
                 data={data}
-                innerRadius={45}
-                outerRadius={65}
+                innerRadius={46}
+                outerRadius={66}
                 paddingAngle={4}
                 dataKey="value"
               >
@@ -61,42 +66,47 @@ export const SourceBreakdownChart: React.FC<SourceBreakdownChartProps> = ({ metr
           </ResponsiveContainer>
         </div>
 
-        <div className="space-y-3">
+        {/* 2-column breakdown badges */}
+        <div className="w-full grid grid-cols-2 gap-2 sm:gap-2.5 mt-1">
           {/* CAMS item */}
-          <div className="p-2.5 rounded-lg bg-blue-50/50 border border-blue-100">
-            <div className="flex items-center justify-between text-xs font-semibold text-blue-900">
-              <span className="flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+          <div className="p-2 sm:p-2.5 rounded-lg bg-blue-50/60 border border-blue-100">
+            <div className="flex items-center justify-between text-xs font-bold text-blue-900">
+              <span className="flex items-center gap-1.5 truncate">
+                <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0"></span>
                 CAMS
               </span>
-              <span>{camsPercent}%</span>
+              <span className="font-mono text-blue-700">{camsPercent}%</span>
             </div>
-            <div className="flex justify-between items-center text-[11px] text-blue-700 mt-1">
-              <span>{formatCompactCurrency(metrics.camsAum)}</span>
-              <span>{metrics.camsClientsCount} Clients</span>
+            <div className="mt-1 text-xs font-bold font-mono text-slate-800 truncate" title={formatCurrency(metrics.camsAum)}>
+              {formatCompactCurrency(metrics.camsAum)}
+            </div>
+            <div className="text-[10px] text-slate-500 mt-0.5">
+              {metrics.camsClientsCount} clients
             </div>
           </div>
 
           {/* KFintech item */}
-          <div className="p-2.5 rounded-lg bg-purple-50/50 border border-purple-100">
-            <div className="flex items-center justify-between text-xs font-semibold text-purple-900">
-              <span className="flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
-                KFintech
+          <div className="p-2 sm:p-2.5 rounded-lg bg-purple-50/60 border border-purple-100">
+            <div className="flex items-center justify-between text-xs font-bold text-purple-900">
+              <span className="flex items-center gap-1.5 truncate">
+                <span className="w-2 h-2 rounded-full bg-purple-500 shrink-0"></span>
+                KFin
               </span>
-              <span>{kfinPercent}%</span>
+              <span className="font-mono text-purple-700">{kfinPercent}%</span>
             </div>
-            <div className="flex justify-between items-center text-[11px] text-purple-700 mt-1">
-              <span>{formatCompactCurrency(metrics.kfintechAum)}</span>
-              <span>{metrics.kfintechClientsCount} Clients</span>
+            <div className="mt-1 text-xs font-bold font-mono text-slate-800 truncate" title={formatCurrency(metrics.kfintechAum)}>
+              {formatCompactCurrency(metrics.kfintechAum)}
+            </div>
+            <div className="text-[10px] text-slate-500 mt-0.5">
+              {metrics.kfintechClientsCount} clients
             </div>
           </div>
         </div>
       </div>
 
-      <div className="text-[11px] text-slate-400 border-t border-slate-100 pt-2 flex justify-between">
-        <span>Combined Total: {formatCurrency(metrics.totalAum)}</span>
-        <span>{metrics.totalRecords} Records</span>
+      <div className="text-[11px] text-slate-400 border-t border-slate-100 pt-2 flex items-center justify-between">
+        <span className="truncate">Combined Total</span>
+        <span className="font-semibold text-slate-700 font-mono">{formatCompactCurrency(metrics.totalAum)}</span>
       </div>
     </div>
   );

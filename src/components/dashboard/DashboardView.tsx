@@ -107,28 +107,25 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       {/* Top Metric Cards */}
       <MetricCards metrics={metrics} />
 
-      {/* Charts & Highlights Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1">
+      {/* Analytics & Highlights Row (3 balanced cards side-by-side on desktop, stacked on mobile) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 items-stretch">
+        <div className="flex flex-col">
           <SourceBreakdownChart metrics={metrics} />
         </div>
-        <div className="lg:col-span-2">
+        <div className="flex flex-col">
           <TopClientsCard
             topClients={topClients}
             onSelectClient={onSelectClient}
             onViewAllClients={onNavigateToClients}
           />
         </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1">
+        <div className="flex flex-col md:col-span-2 lg:col-span-1">
           <TopSchemesCard topSchemes={topSchemes} />
         </div>
-        <div className="lg:col-span-2">
-          <AmcSummaryTable amcSummaries={amcSummaries} />
-        </div>
       </div>
+
+      {/* Full-width Fund House (AMC) Breakdown */}
+      <AmcSummaryTable amcSummaries={amcSummaries} totalAum={metrics.totalAum} />
     </div>
   );
 };
